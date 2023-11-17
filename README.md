@@ -30,8 +30,8 @@ $ npm i egg-socket.io --save
 
 ## Requirements
 
-- Node.js >= 8.0
-- Egg.js >= 2.0
+- Node.js >= 14.0
+- Egg.js >= 3.0
 
 ## Configuration
 
@@ -49,7 +49,9 @@ Configure Socket.IO in `${app_root}/config/config.default.js`:
 
 ```js
 exports.io = {
-  init: { }, // passed to engine.io
+  // init: { }, // support socket.io v4 breaking change! not init config
+  options: {    // support all socket.io v4 options. ref: https://socket.io/docs/v4/server-options/
+  },
   namespace: {
     '/': {
       connectionMiddleware: [],
@@ -63,31 +65,33 @@ exports.io = {
 };
 ```
 
-#### uws
+### Socket.id Generation
 
-**Egg's socket is using `ws`, [uws](https://www.npmjs.com/package/uws) is deprecated due to [some reasons](https://github.com/socketio/socket.io/issues/3319).**
+**Notice：** The current "Socket.IO" doesn't support to generate `id` by overwriting the function, so we can only implement it by [middleware](#middleware).
 
-If you insist using this, please config like this following:
+Suppose we have a middleware folder, and there's a `generateId.js` below:
 
 ```js
-exports.io = {
-  init: { wsEngine: 'uws' },
+module.exports = app => {
+    return async (ctx, next) => {
+        // Here you can generate a unique ID for ctx.socket.id
+        // This is only a sample
+        // you can also get 'request' through 'ctx.request'
+        ctx.socket.id = '1234567890';
+        await next();
+    };
 };
 ```
 
-- For more options in `init` : [engine.io](https://github.com/socketio/engine.io/blob/master/README.md#methods-1).
-- For more configs of `Egg Socket` in default : [config.default.js](config/config.default.js).
-
-### generateId
-
-**Note:** This function is left on purpose to override and generate a unique ID according to your own rule:
+Now you can refer the middleware directly in your `config.default.js` file:
 
 ```js
 exports.io = {
-  generateId: (request) => {
-        // Something like UUID.
-        return 'This should be a random unique ID';
-    }
+  namespace: {
+    '/': {
+      connectionMiddleware: ['generateId'],
+    },
+  }
 };
 ```
 
