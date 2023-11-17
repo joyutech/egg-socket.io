@@ -8,3 +8,4 @@ run/
 .DS_Store
 *.swp
 dump.rdb
+pnpm-lock.yaml
