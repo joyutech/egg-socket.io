@@ -1,4 +1,9 @@
 
+4.2.0 / 2023-11-17
+==================
+
+  * feat: [BREAKING CHANGE] upgrade socket.io from 2.x to the 4.x
+
 4.1.6 / 2019-06-20
 ==================
 
