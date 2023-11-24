@@ -3,7 +3,7 @@
 /**
  * The default `io` config.
  *
- * `init`: This is the same configs in
+ * `options`: This is the same configs in
  * https://github.com/socketio/engine.io/blob/master/README.md#methods-1
  *
  * `namespace`:
@@ -21,7 +21,7 @@
  * connectionMiddlewares and packetMiddlewares.
  */
 exports.io = {
-  init: {},
+  options: {},
   namespace: {
     '/': {
       connectionMiddleware: [],

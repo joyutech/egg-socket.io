@@ -1,7 +1,7 @@
 'use strict';
 
 exports.io = {
-  init: {
+  options: {
     wsEngine: 'uws',
   }
 };
