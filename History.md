@@ -1,4 +1,10 @@
 
+4.2.1 / 2023-12-06
+==================
+
+  * feat: [BREAKING CHANGE] support using app.middleware
+  * feat: change config.io.init to config.io.options
+
 4.2.0 / 2023-11-17
 ==================
 
